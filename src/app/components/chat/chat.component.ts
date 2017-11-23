@@ -13,14 +13,18 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this._chatService.cargarMensajes()
-      .subscribe( (mensajes:any[] )=>{
-        console.log(mensajes);
-      })
+      .subscribe();
   }
 
   enviarMensaje(){
+    if(this.mensaje.length == 0)
+      return;
+
+    this._chatService.agregarMensaje(this.mensaje)
+      .then(()=> this.mensaje = "" )
+      .catch((err)=>console.error("error al enviar",err));
     console.log(this.mensaje);
-    this.mensaje = "";
   }
+
 
 }
