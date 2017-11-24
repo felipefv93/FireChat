@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   }
 
   ingresar(proveedor: string){
-    console.log(proveedor);
+    // console.log(proveedor);
     this._chatService.login(proveedor);
   }
 

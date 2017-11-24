@@ -13,7 +13,7 @@ export class ChatService {
               public afAuth: AngularFireAuth) { 
                 this.afAuth.authState
                   .subscribe( user =>{
-                    console.log("Estado del usuario: ", user);
+                    // console.log("Estado del usuario: ", user);
                     if(!user){
                       return;
                     }
@@ -39,11 +39,11 @@ export class ChatService {
   }
 
   cargarMensajes(){
-    this.itemsCollection = this.afs.collection<Mensaje>('chats', ref => ref.orderBy('fecha','desc').limit(5));
+    this.itemsCollection = this.afs.collection<Mensaje>('chats', ref => ref.orderBy('fecha','desc').limit(20));
     // this.chats = this.itemsCollection.valueChanges();
     return this.itemsCollection.valueChanges()
       .map( (mensajes:Mensaje[]) =>{
-        console.log(mensajes);
+        // console.log(mensajes);
         this.chats = [];
         for(let mensaje of mensajes){
           this.chats.unshift( mensaje );
@@ -55,9 +55,10 @@ export class ChatService {
   agregarMensaje(texto: string){
     //TODO falta el uid del usuario
     let mensaje: Mensaje = {
-      nombre : 'Demo',
+      nombre : this.usuario.nombre,
       mensaje: texto,
-      fecha: new Date().getTime()
+      fecha: new Date().getTime(),
+      uid: this.usuario.uid
     }
 
     return this.itemsCollection.add( mensaje );
