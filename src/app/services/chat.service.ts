@@ -19,16 +19,23 @@ export class ChatService {
                     }
                     this.usuario.nombre = user.displayName;
                     this.usuario.uid = user.uid;
-                    
+
                   });
               }
 
 
   login(proveedor: string) {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    if( proveedor === 'google'){
+      this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    }else{
+      this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
+    }
+    
   }
   logout() {
+    this.usuario = {};
     this.afAuth.auth.signOut();
+    
   }
 
   cargarMensajes(){
